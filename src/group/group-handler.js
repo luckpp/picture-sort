@@ -13,10 +13,11 @@ class BBGroup {
     this.init(this.toPath);
 
     const dir = await fs.promises.opendir(this.fromPath);
-    for await (const file of dir) {
-      if (file.isFile()) {
-        const fileName = file.name;
-        const parentDir = this.nameProcessor.computeParentDir(file.name);
+
+    for await (const item of dir) {
+      if (item.isFile()) {
+        const fileName = item.name;
+        const parentDir = this.nameProcessor.computeParentDir(item.name);
 
         const fromFilePath = path.join(this.fromPath, fileName);
         const toFilePath = path.join(this.toPath, parentDir, fileName);

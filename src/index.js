@@ -1,6 +1,7 @@
 const GroupHandler = require('./group/group-handler');
 const BBNameProcessor = require('./group/name-processors/blackberry-name-processor');
 const NLNameProcessor = require('./group/name-processors/nokia-lumia-name-processor');
+const CameraFolders = require('./rename/camera-folders');
 const NameHandler = require('./utils/name-handler');
 
 async function rename() {
@@ -25,16 +26,22 @@ async function groupBlackberry() {
 async function groupNokiaLumia() {
   const nlNameProcessor = new NLNameProcessor();
   const groupHandler = new GroupHandler(
-    'D:\\Pictures Nokia Lumia\\Camera Roll_SD\\',
-    'D:\\Pictures Nokia Lumia\\Camera Roll_SD - processed',
+    'D:\\Poze\\Poze - WP Pro - Camera Roll\\',
+    'D:\\Poze\\Poze - WP Pro - Camera Roll\\processed',
     nlNameProcessor);
 
   await groupHandler.copyFiles();
 }
 
+async function renameCameraSubFolders() {
+  const cameraFolders = new CameraFolders('D:\\Poze\\Poze - Camera Sony\\');
+  await cameraFolders.renameSubFolders();
+}
+
 async function start() {
-  //await groupBlackberry();
-  await groupNokiaLumia();
+  // await groupBlackberry();
+  // await groupNokiaLumia();
+  renameCameraSubFolders();
 }
 
 start();
